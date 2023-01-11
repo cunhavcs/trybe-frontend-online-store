@@ -1,6 +1,6 @@
 export async function getCategories() {
   // Implemente aqui
-  first commit
+  first commit :D
 }
 
 export async function getProductsFromCategoryAndQuery(/* categoryId, query */) {
