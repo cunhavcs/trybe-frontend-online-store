@@ -1,3 +1,5 @@
+const api = 'https://api.mercadolibre.com/sites/MLB';
+
 export async function getCategories() {
   const resposta = await fetch(`${api}/categories`);
   const data = await resposta.json();

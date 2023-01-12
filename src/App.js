@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import SearchField from './components/SearchFIeld';
 import ShoppingCart from './components/ShoppingCart';
+import SearchField from './components/SearchField';
 
 class App extends React.Component {
   render() {
