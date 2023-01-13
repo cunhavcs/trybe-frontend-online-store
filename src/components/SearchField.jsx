@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import ProductList from './ProductList';
+// .
 
 class SearchField extends React.Component {
   state = {
