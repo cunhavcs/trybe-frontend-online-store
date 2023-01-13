@@ -1,17 +1,17 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-// import PropTypes from 'prop-types';
 // .
 
 class ProductList extends React.Component {
   render() {
     const { productList } = this.props;
-
+    console.log(productList);
     return (
-      <div data-testid="product">
-        {productList
+      <div>
+        {!productList
           ? <p>Nenhum produto foi encontrado</p>
           : productList.map((product) => (
-            <div key={ product.id }>
+            <div data-testid="product" key={ product.id }>
               <h3>{ product.title }</h3>
               <img src={ product.thumbnail } alt="imagem-do=produto" />
               <h4>{ product.price }</h4>
@@ -21,7 +21,13 @@ class ProductList extends React.Component {
   }
 }
 
-// ProductList.propTypes = {
-// productList: PropTypes.arrayOf(PropTypes.)
-// }
+ProductList.propTypes = {
+  productList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    thumbnail: PropTypes.string,
+    price: PropTypes.number,
+  })).isRequired,
+};
+
 export default ProductList;
