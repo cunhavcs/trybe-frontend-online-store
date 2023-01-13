@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import ProductList from './ProductList';
 
 class SearchField extends React.Component {
   state = {
     categories: [],
+    queryValue: '',
+    products: [],
   };
 
   componentDidMount() {
@@ -18,12 +21,42 @@ class SearchField extends React.Component {
     });
   };
 
+  handlechange = (event) => {
+    this.setState({
+      queryValue: event.target.value,
+    });
+  };
+
+  handleClick = async () => {
+    const { queryValue } = this.state;
+    const productList = await getProductsFromCategoryAndQuery('', queryValue);
+    console.log(productList);
+    if (productList.lenght === 0) {
+      this.setState({
+        products: false,
+      });
+    } else {
+      this.setState({
+        products: productList,
+      });
+    }
+  };
+
   render() {
-    const { categories } = this.state;
+    const { categories, products } = this.state;
     return (
       <div>
-        {console.log(categories)}
-        <input type="text" />
+        <input
+          type="text"
+          data-testid="query-input"
+          onChange={ this.handlechange }
+        />
+        <input
+          type="button"
+          data-testid="query-button"
+          value="Pesquisar"
+          onClick={ this.handleClick }
+        />
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
@@ -45,6 +78,7 @@ class SearchField extends React.Component {
             </div>
           ))}
         </nav>
+        <ProductList productList={ products } />
       </div>
     );
   }
