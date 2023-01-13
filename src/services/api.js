@@ -9,8 +9,7 @@ export async function getCategories() {
 export async function getProductsFromCategoryAndQuery(categoryId, query) {
   const response = await fetch(`${api}/search?category=${categoryId}&q=${query}`);
   const data = await response.json();
-  console.log(data, categoryId, query);
-  return data.results;
+  return data;
 }
 
 export async function getProductById() {

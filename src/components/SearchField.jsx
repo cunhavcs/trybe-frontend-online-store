@@ -31,14 +31,13 @@ class SearchField extends React.Component {
   handleClick = async () => {
     const { queryValue } = this.state;
     const productList = await getProductsFromCategoryAndQuery('', queryValue);
-    if (productList.length < 1) {
+    if (productList.results.length < 1) {
       this.setState({
         products: false,
       });
     } else {
-      console.log(productList);
       this.setState({
-        products: productList,
+        products: productList.results,
       });
     }
   };
