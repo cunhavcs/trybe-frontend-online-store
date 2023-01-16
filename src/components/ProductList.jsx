@@ -5,13 +5,17 @@ import { Link } from 'react-router-dom';
 class ProductList extends React.Component {
   render() {
     const { productList } = this.props;
-    console.log(productList);
+    // console.log(productList);
     return (
       <div>
         {!productList
           ? <p>Nenhum produto foi encontrado</p>
           : productList.map((product) => (
-            <Link to="/productdetail" key={ product.id }>
+            <Link
+              to={ `/productdetail/${product.id}` }
+              key={ product.id }
+              data-testid="product-detail-link"
+            >
               <div data-testid="product">
                 <h3>{ product.title }</h3>
                 <img src={ product.thumbnail } alt="imagem-do=produto" />
