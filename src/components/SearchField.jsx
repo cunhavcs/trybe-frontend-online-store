@@ -55,6 +55,7 @@ class SearchField extends React.Component {
     const { categories, products, produtosFiltrados } = this.state;
     return (
       <div>
+        {console.log(products)}
         <input
           type="text"
           data-testid="query-input"
