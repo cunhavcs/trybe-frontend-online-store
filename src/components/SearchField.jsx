@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import {
+  getCategories,
+  getProductsFromCategoryAndQuery } from '../services/api';
 import ProductList from './ProductList';
-// .
+import CategoryList from './CategoryList';
 
 class SearchField extends React.Component {
   state = {
     categories: [],
     queryValue: '',
     products: [],
+    produtosFiltrados: [],
   };
 
   componentDidMount() {
@@ -42,8 +45,14 @@ class SearchField extends React.Component {
     }
   };
 
+  handleRadioClick = async ({ target }) => {
+    const idCategory = target.id;
+    const produtosFiltrados = await getProductsFromCategoryAndQuery(idCategory, '');
+    this.setState({ produtosFiltrados: produtosFiltrados.results });
+  };
+
   render() {
-    const { categories, products } = this.state;
+    const { categories, products, produtosFiltrados } = this.state;
     return (
       <div>
         <input
@@ -72,6 +81,7 @@ class SearchField extends React.Component {
                   id={ category.id }
                   name="category"
                   value={ category.name }
+                  onClick={ this.handleRadioClick }
                 />
                 { category.name }
               </label>
@@ -79,6 +89,7 @@ class SearchField extends React.Component {
           ))}
         </nav>
         <ProductList productList={ products } />
+        <CategoryList produtosFiltrados={ produtosFiltrados } />
       </div>
     );
   }
