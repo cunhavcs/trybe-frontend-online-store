@@ -1,5 +1,4 @@
 import React from 'react';
-// import CategorySideBar from './CategorySideBar';
 
 class ShoppingCart extends React.Component {
   state = {
@@ -20,7 +19,7 @@ class ShoppingCart extends React.Component {
     const { produtosAdicionadosCarrinho } = this.state;
     return (
       <div>
-        {produtosAdicionadosCarrinho.length === 0
+        {JSON.parse(localStorage.getItem('carrinho')) === null
           ? <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
           : produtosAdicionadosCarrinho.map(({ id, price, quantidade, title }) => (
             <div key={ id }>

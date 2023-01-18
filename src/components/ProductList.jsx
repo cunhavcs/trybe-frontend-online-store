@@ -45,25 +45,27 @@ class ProductList extends React.Component {
         {!produtosFiltrados
           ? <p>Nenhum produto foi encontrado</p>
           : produtosFiltrados.map((product) => (
-            <div key={ product.id }>
+            <div key={ product.id } data-testid="product">
               <Link
                 to={ `/productdetail/${product.id}` }
                 data-testid="product-detail-link"
               >
-                Detalhes do produto
+                <div>
+                  <h3>{ product.title }</h3>
+                  <img
+                    src={ product.thumbnail }
+                    alt="imagem-do=produto"
+                  />
+                  <h4>{ product.price }</h4>
+                </div>
               </Link>
-              <div data-testid="product">
-                <h3>{ product.title }</h3>
-                <img src={ product.thumbnail } alt="imagem-do=produto" />
-                <h4>{ product.price }</h4>
-                <input
-                  type="button"
-                  data-testid="product-add-to-cart"
-                  id={ product.id }
-                  onClick={ this.adicionaProdutosListaCarrinho }
-                  value="Adicionar ao carrinho"
-                />
-              </div>
+              <input
+                type="button"
+                data-testid="product-add-to-cart"
+                id={ product.id }
+                onClick={ this.adicionaProdutosListaCarrinho }
+                value="Adicionar ao carrinho"
+              />
             </div>
           ))}
       </div>

@@ -53,7 +53,6 @@ class SearchField extends React.Component {
     const { categories, products, produtosFiltrados } = this.state;
     return (
       <div>
-        {/* {console.log(products)} */}
         <input
           type="text"
           data-testid="query-input"
@@ -87,7 +86,7 @@ class SearchField extends React.Component {
             </div>
           ))}
         </nav>
-        <ProductList productList={ products } onClick={ this.handleProductClick } />
+        <ProductList produtosFiltrados={ products } onClick={ this.handleProductClick } />
         <CategoryList
           produtosFiltrados={ produtosFiltrados }
           onClick={ this.handleProductClick }
