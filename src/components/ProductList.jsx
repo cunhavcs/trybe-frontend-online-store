@@ -3,14 +3,48 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class ProductList extends React.Component {
+  state = {
+    produtosAdicionadosCarrinho: [],
+  };
+
+  adicionaProdutosListaCarrinho = ({ target: { id } }) => {
+    const { produtosAdicionadosCarrinho } = this.state;
+    const { produtosFiltrados } = this.props;
+
+    const produtoClicado = produtosFiltrados
+      .find((produto) => produto.id === id);
+    const idProdutoFormatoCarrinho = produtoClicado.id;
+    const titleProdutoFormatoCarrinho = produtoClicado.title;
+    const priceProdutoFormatoCarrinho = produtoClicado.price;
+
+    const produtoClicadoFormatoCarrinho = {
+      id: idProdutoFormatoCarrinho,
+      title: titleProdutoFormatoCarrinho,
+      price: priceProdutoFormatoCarrinho,
+    };
+    produtoClicadoFormatoCarrinho.quantidade = 1;
+
+    const produtoExisteNaLista = produtosAdicionadosCarrinho
+      .some((produtoDaLista) => produtoDaLista.id === id);
+
+    if (produtoExisteNaLista) {
+      produtosAdicionadosCarrinho
+        .find((produto) => produto.id === id).quantidade += 1;
+    } else {
+      produtosAdicionadosCarrinho.push(produtoClicadoFormatoCarrinho);
+      this.setState({ produtosAdicionadosCarrinho });
+    }
+
+    localStorage.setItem('carrinho', JSON.stringify(produtosAdicionadosCarrinho));
+  };
+
   render() {
-    const { productList } = this.props;
-    // console.log(productList);
+    const { produtosFiltrados } = this.props;
     return (
       <div>
-        {!productList
+        {!produtosFiltrados
           ? <p>Nenhum produto foi encontrado</p>
-          : productList.map((product) => (
+          : produtosFiltrados.map((product) => (
             <div key={ product.id }>
               <Link
                 to={ `/productdetail/${product.id}` }
@@ -22,12 +56,13 @@ class ProductList extends React.Component {
                 <h3>{ product.title }</h3>
                 <img src={ product.thumbnail } alt="imagem-do=produto" />
                 <h4>{ product.price }</h4>
-                <button
+                <input
                   type="button"
                   data-testid="product-add-to-cart"
-                >
-                  Adicionar ao carrinho
-                </button>
+                  id={ product.id }
+                  onClick={ this.adicionaProdutosListaCarrinho }
+                  value="Adicionar ao carrinho"
+                />
               </div>
             </div>
           ))}
@@ -37,7 +72,7 @@ class ProductList extends React.Component {
 }
 
 ProductList.propTypes = {
-  productList: PropTypes.arrayOf(PropTypes.shape({
+  produtosFiltrados: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
     thumbnail: PropTypes.string,
