@@ -11,17 +11,26 @@ class ProductList extends React.Component {
         {!productList
           ? <p>Nenhum produto foi encontrado</p>
           : productList.map((product) => (
-            <Link
-              to={ `/productdetail/${product.id}` }
-              key={ product.id }
-              data-testid="product-detail-link"
-            >
+            <div key={ product.id }>
+              <Link
+                to={ `/productdetail/${product.id}` }
+                data-testid="product-detail-link"
+              >
+                Detalhes do produto
+              </Link>
               <div data-testid="product">
                 <h3>{ product.title }</h3>
                 <img src={ product.thumbnail } alt="imagem-do=produto" />
                 <h4>{ product.price }</h4>
+                <button
+                  type="button"
+                  data-testid="product-add-to-cart"
+                >
+                  Adicionar ao carrinho
+                </button>
               </div>
-            </Link>))}
+            </div>
+          ))}
       </div>
     );
   }
