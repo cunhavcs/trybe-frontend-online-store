@@ -7,9 +7,10 @@ import CategoryList from './CategoryList';
 class SearchField extends React.Component {
   state = {
     categories: [],
+    clicouEmPesquisar: false,
+    clicouEmRadioBtn: false,
     queryValue: '',
     products: [],
-    produtosFiltrados: [],
   };
 
   componentDidMount() {
@@ -30,6 +31,7 @@ class SearchField extends React.Component {
   };
 
   handleClick = async () => {
+    this.setState({ clicouEmPesquisar: true, clicouEmRadioBtn: false });
     const { queryValue } = this.state;
     const productList = await getProductsFromCategoryAndQuery('', queryValue);
     if (productList.results.length < 1) {
@@ -37,26 +39,46 @@ class SearchField extends React.Component {
         products: false,
       });
     } else {
-      this.setState({
-        products: productList.results,
-      });
+      this.setState({ products: productList.results, queryValue: '' });
     }
   };
 
   handleRadioClick = async ({ target }) => {
+    this.setState({ clicouEmPesquisar: false, clicouEmRadioBtn: true });
     const idCategory = target.id;
-    const produtosFiltrados = await getProductsFromCategoryAndQuery(idCategory, '');
-    this.setState({ produtosFiltrados: produtosFiltrados.results });
+    const productList = await getProductsFromCategoryAndQuery(idCategory, '');
+    if (productList.results.length < 1) {
+      this.setState({
+        products: false,
+      });
+    } else {
+      this.setState({ products: productList.results });
+    }
+  };
+
+  renderizaListaDeProdutos = () => {
+    const { clicouEmPesquisar, clicouEmRadioBtn, products } = this.state;
+
+    if (clicouEmPesquisar && !clicouEmRadioBtn) {
+      return (<ProductList produtosFiltrados={ products } />);
+    } if (!clicouEmPesquisar && clicouEmRadioBtn) {
+      return (<CategoryList produtosFiltrados={ products } />);
+    }
+    return '';
   };
 
   render() {
-    const { categories, products, produtosFiltrados } = this.state;
+    const {
+      categories,
+      queryValue } = this.state;
+
     return (
       <div>
         <input
           type="text"
           data-testid="query-input"
           onChange={ this.handlechange }
+          value={ queryValue }
         />
         <input
           type="button"
@@ -86,11 +108,7 @@ class SearchField extends React.Component {
             </div>
           ))}
         </nav>
-        <ProductList produtosFiltrados={ products } onClick={ this.handleProductClick } />
-        <CategoryList
-          produtosFiltrados={ produtosFiltrados }
-          onClick={ this.handleProductClick }
-        />
+        { this.renderizaListaDeProdutos() }
       </div>
     );
   }

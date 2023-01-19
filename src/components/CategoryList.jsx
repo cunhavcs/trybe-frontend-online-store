@@ -66,7 +66,7 @@ class CategoryList extends React.Component {
                   <h3>{ product.title }</h3>
                   <img
                     src={ product.thumbnail }
-                    alt="imagem-do=produto"
+                    alt="imagem-do-produto"
                   />
                   <h4>{ product.price }</h4>
                 </div>
@@ -89,6 +89,7 @@ CategoryList.propTypes = {
   produtosFiltrados: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
+    thumbnail: PropTypes.string,
     price: PropTypes.number,
   })).isRequired,
 };

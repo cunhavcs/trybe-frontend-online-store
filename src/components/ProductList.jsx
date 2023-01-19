@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class ProductList extends React.Component {
@@ -51,6 +51,7 @@ class ProductList extends React.Component {
 
   render() {
     const { produtosFiltrados } = this.props;
+
     return (
       <div>
         {!produtosFiltrados
@@ -65,7 +66,7 @@ class ProductList extends React.Component {
                   <h3>{ product.title }</h3>
                   <img
                     src={ product.thumbnail }
-                    alt="imagem-do=produto"
+                    alt="imagem-do-produto"
                   />
                   <h4>{ product.price }</h4>
                 </div>
