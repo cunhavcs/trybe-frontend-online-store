@@ -4,7 +4,18 @@ import { Link } from 'react-router-dom';
 
 class ProductList extends React.Component {
   state = {
-    produtosAdicionadosCarrinho: [],
+  };
+
+  componentDidMount() {
+    this.recuperaListaLocalStorage();
+  }
+
+  recuperaListaLocalStorage = () => {
+    let produtosAdicionadosCarrinho = [];
+    if (JSON.parse(localStorage.getItem('carrinho')) !== null) {
+      produtosAdicionadosCarrinho = JSON.parse(localStorage.getItem('carrinho'));
+    }
+    this.setState({ produtosAdicionadosCarrinho });
   };
 
   adicionaProdutosListaCarrinho = ({ target: { id } }) => {
