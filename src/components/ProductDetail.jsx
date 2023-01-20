@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 
-// necessário fazer a mesma alteração no componentes ProductList e CategoryList
-
 class ProductDetail extends React.Component {
   state = {
     product: {},
@@ -68,7 +66,7 @@ class ProductDetail extends React.Component {
         </h3>
         <img
           src={ product.thumbnail }
-          alt="imagem-do=produto"
+          alt="imagem-do-produto"
           data-testid="product-detail-image"
         />
         <h4 data-testid="product-detail-price">{ product.price }</h4>
